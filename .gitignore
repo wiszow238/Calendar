@@ -1,0 +1,7 @@
+# Intellij
+.idea/
+*.iml
+
+node_modules/
+
+rt_chal.md.txt
