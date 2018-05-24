@@ -1,17 +1,16 @@
 import React from "react";
 import {shallow} from "enzyme";
 import Home from "../Home";
+import Week from "../../week/week";
 
 describe('Home', () => {
     let wrapper;
-    const mockedDate = new Date(2018, 3, 20);
     const originalDate = Date;
-
-    global.Date = jest.fn(() => mockedDate);
-    global.Date.setDate = originalDate.setDate;
+    const fixedDate = new Date(2018, 2, 20);
+    const fixedDate2 = new Date(2018, 2, 1);
 
     beforeEach(() => {
-        wrapper = shallow(<Home />);
+        wrapper = shallow(<Home/>);
     });
 
     describe('renders', () => {
@@ -35,32 +34,56 @@ describe('Home', () => {
         });
 
         it('correct month and year', () => {
-            let thead = table.find('thead');
+            global.Date = jest.fn(() => fixedDate);
+            global.Date.setDate = originalDate.setDate;
+            wrapper = shallow(<Home/>);
 
-            expect(thead.find('td').text()).toBe("April 2018");
+            let thead = wrapper.find('thead');
+
+            expect(thead.find('td').text()).toBe("March 2018");
         });
 
-        it('day rows', () => {
-            let row = table.find('tbody').find('tr');
+        describe('week rows', () => {
+            it('day label row', () => {
+                let row = table.find('tbody').find('tr').at(0);
 
-            expect(row.length).toBe(6);
-            expect(row.at(0).find('td').length).toBe(7);
-            expect(row.at(1).find('td').length).toBe(7);
-            expect(row.at(2).find('td').length).toBe(7);
-            expect(row.at(3).find('td').length).toBe(7);
-            expect(row.at(4).find('td').length).toBe(7);
-        });
+                expect(row.find('td').at(0).text()).toBe("SUN");
+                expect(row.find('td').at(1).text()).toBe("MON");
+                expect(row.find('td').at(2).text()).toBe("TUE");
+                expect(row.find('td').at(3).text()).toBe("WED");
+                expect(row.find('td').at(4).text()).toBe("THU");
+                expect(row.find('td').at(5).text()).toBe("FRI");
+                expect(row.find('td').at(6).text()).toBe("SAT");
+            });
 
-        it('day label row', () => {
-            let row = table.find('tbody').find('tr').at(0);
+            it('correct number of weeks', () => {
+                let weeks = table.find(Week);
 
-            expect(row.find('td').at(0).text()).toBe("SUN");
-            expect(row.find('td').at(1).text()).toBe("MON");
-            expect(row.find('td').at(2).text()).toBe("TUE");
-            expect(row.find('td').at(3).text()).toBe("WED");
-            expect(row.find('td').at(4).text()).toBe("THU");
-            expect(row.find('td').at(5).text()).toBe("FRI");
-            expect(row.find('td').at(6).text()).toBe("SAT");
+                expect(weeks.length).toBe(5);
+            });
+
+            it('correct weeks', () => {
+                Date = class extends Date {
+                    constructor(a) {
+                        super();
+
+                        if (a === undefined) {
+                            return fixedDate;
+                        }
+                        return fixedDate2;
+                    }
+                };
+
+                wrapper = shallow(<Home/>);
+
+                let week = wrapper.find(Week).at(0);
+
+                expect(week.prop('date')).toBe("Sun Feb 25 2018");
+                expect(wrapper.find(Week).at(1).prop('date')).toBe("Sun Mar 04 2018");
+                expect(wrapper.find(Week).at(2).prop('date')).toBe("Sun Mar 11 2018");
+                expect(wrapper.find(Week).at(3).prop('date')).toBe("Sun Mar 18 2018");
+                expect(wrapper.find(Week).at(4).prop('date')).toBe("Sun Mar 25 2018");
+            });
         });
     });
 });
