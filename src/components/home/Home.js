@@ -1,5 +1,11 @@
 import React, {Component} from 'react';
 import Week from "../week/week";
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 
 export default class Home extends Component {
     renderMonth = () => {
@@ -8,7 +14,7 @@ export default class Home extends Component {
         ];
         let date = new Date();
 
-        return (<div>
+        return (<div className="month-header">
             {monthLabels[date.getMonth()] + " " + date.getFullYear()}
         </div>)
     };
@@ -26,7 +32,7 @@ export default class Home extends Component {
 
         let weeks = [];
         for (let weekNumber = 0; weekNumber < 5; weekNumber++) {
-            weeks.push(<Week date={startOfWeek.toDateString()}/>);
+            weeks.push(<Week key={weekNumber} date={startOfWeek.toDateString()}/>);
             startOfWeek.setDate(startOfWeek.getDate() + 7);
         }
 
@@ -35,25 +41,27 @@ export default class Home extends Component {
 
     render() {
         return (
-            <table>
-                <thead>
-                <tr>
-                    <td colSpan="7">{this.renderMonth()}</td>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>SUN</td>
-                    <td>MON</td>
-                    <td>TUE</td>
-                    <td>WED</td>
-                    <td>THU</td>
-                    <td>FRI</td>
-                    <td>SAT</td>
-                </tr>
-                {this.renderDays()}
-                </tbody>
-            </table>
+            <Paper className="root">
+                <Table className="table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell colSpan="7">{this.renderMonth()}</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        <TableRow>
+                            <TableCell>SUN</TableCell>
+                            <TableCell>MON</TableCell>
+                            <TableCell>TUE</TableCell>
+                            <TableCell>WED</TableCell>
+                            <TableCell>THU</TableCell>
+                            <TableCell>FRI</TableCell>
+                            <TableCell>SAT</TableCell>
+                        </TableRow>
+                        {this.renderDays()}
+                    </TableBody>
+                </Table>
+            </Paper>
         );
     }
 }

@@ -2,6 +2,12 @@ import React from "react";
 import {shallow} from "enzyme";
 import Home from "../Home";
 import Week from "../../week/week";
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 
 describe('Home', () => {
     let wrapper;
@@ -17,7 +23,11 @@ describe('Home', () => {
         let table;
 
         beforeEach(() => {
-            table = wrapper.find('table');
+            table = wrapper.find(Table);
+        });
+
+        it('paper card', () => {
+            expect(wrapper.find(Paper).length).toBe(1);
         });
 
         it('main calendar table', () => {
@@ -25,12 +35,12 @@ describe('Home', () => {
         });
 
         it('month row', () => {
-            let thead = table.find('thead');
+            let thead = table.find(TableHead);
 
             expect(thead.length).toBe(1);
-            expect(thead.find('tr').length).toBe(1);
-            expect(thead.find('td').length).toBe(1);
-            expect(thead.find('td').prop("colSpan")).toBe("7");
+            expect(thead.find(TableRow).length).toBe(1);
+            expect(thead.find(TableCell).length).toBe(1);
+            expect(thead.find(TableCell).prop("colSpan")).toBe("7");
         });
 
         it('correct month and year', () => {
@@ -38,22 +48,22 @@ describe('Home', () => {
             global.Date.setDate = originalDate.setDate;
             wrapper = shallow(<Home/>);
 
-            let thead = wrapper.find('thead');
+            let thead = wrapper.find(TableHead);
 
-            expect(thead.find('td').text()).toBe("March 2018");
+            expect(thead.find(TableCell).render().text()).toBe("March 2018");
         });
 
         describe('week rows', () => {
             it('day label row', () => {
-                let row = table.find('tbody').find('tr').at(0);
+                let row = table.find(TableBody).find(TableRow).at(0);
 
-                expect(row.find('td').at(0).text()).toBe("SUN");
-                expect(row.find('td').at(1).text()).toBe("MON");
-                expect(row.find('td').at(2).text()).toBe("TUE");
-                expect(row.find('td').at(3).text()).toBe("WED");
-                expect(row.find('td').at(4).text()).toBe("THU");
-                expect(row.find('td').at(5).text()).toBe("FRI");
-                expect(row.find('td').at(6).text()).toBe("SAT");
+                expect(row.find(TableCell).at(0).render().text()).toBe('SUN');
+                expect(row.find(TableCell).at(1).render().text()).toBe("MON");
+                expect(row.find(TableCell).at(2).render().text()).toBe("TUE");
+                expect(row.find(TableCell).at(3).render().text()).toBe("WED");
+                expect(row.find(TableCell).at(4).render().text()).toBe("THU");
+                expect(row.find(TableCell).at(5).render().text()).toBe("FRI");
+                expect(row.find(TableCell).at(6).render().text()).toBe("SAT");
             });
 
             it('correct number of weeks', () => {

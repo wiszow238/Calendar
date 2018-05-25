@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import TableCell from '@material-ui/core/TableCell';
+import TableRow from '@material-ui/core/TableRow';
 
 export default class Week extends Component {
     constructor(props) {
@@ -10,7 +12,7 @@ export default class Week extends Component {
         let renderedDays = [];
 
         for (let dayNumber = 0; dayNumber < 7; dayNumber++) {
-            renderedDays.push(<td>{date.getDate()}</td>);
+            renderedDays.push(<TableCell key={dayNumber} numeric>{date.getDate()}</TableCell>);
             date.setDate(date.getDate() + 1);
         }
 
@@ -19,9 +21,9 @@ export default class Week extends Component {
 
     render() {
         return (
-            <tr>
+            <TableRow>
                 {this.renderDayNumbers()}
-            </tr>
+            </TableRow>
         );
     }
 }
