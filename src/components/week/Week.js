@@ -11,6 +11,7 @@ export default class Week extends Component {
 
     renderButton = (renderDate) => {
         let currentDate = new Date();
+        currentDate.setDate(currentDate.getDate()-1);
         if (renderDate < currentDate) {
             return;
         }
