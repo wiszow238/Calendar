@@ -16,7 +16,7 @@ export default class Week extends Component {
         }
 
         return (
-            <Button mini variant="fab" color="primary" aria-label="add" onClick={this.props.openDialog}>
+            <Button mini variant="fab" color="primary" aria-label="add" onClick={this.props.openDialog.bind(this, renderDate.toString())}>
                 <AddIcon/>
             </Button>
         )

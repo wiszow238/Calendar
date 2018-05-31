@@ -16,14 +16,32 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 export default class Home extends Component {
     state = {
         open: false,
+        appointments: new Map(),
+        newAppointmentDate: "",
+        newAppointmentTime: "",
+        newAppointmentDescription: ""
     };
 
-    handleClickOpen = () => {
-        this.setState({open: true});
+    handleClickOpen = (date) => {
+        date = (new Date(date)).toISOString().split('T')[0];
+        this.setState({
+            open: true,
+            newAppointmentDate: date
+        });
     };
 
-    handleClose = () => {
+    handleSave = () => {
         this.setState({open: false});
+    };
+
+    handleCancel = () => {
+        this.setState({open: false});
+    };
+
+    handleChange = name => event => {
+        this.setState({
+            [name]: event.target.value,
+        });
     };
 
     renderMonth = () => {
@@ -69,20 +87,39 @@ export default class Home extends Component {
                 </DialogTitle>
                 <DialogContent>
                     <div>
-                        Appointment Date: <TextField/>
+                        <TextField
+                            id="appointmentDate"
+                            label="Appointment Date"
+                            type="date"
+                            value={this.state.newAppointmentDate}
+                            onChange={this.handleChange("newAppointmentDate")}
+                        />
                     </div>
                     <div>
-                        Appointment Time: <TextField/>
+                        <TextField
+                            id="appointmentTime"
+                            label="Appointment Time"
+                            type="time"
+                            value={this.state.newAppointmentTime}
+                            onChange={this.handleChange("newAppointmentTime")}
+                        />
                     </div>
                     <div>
-                        Description: <TextField/>
+                        <TextField
+                            id="description"
+                            label="Description"
+                            multiline
+                            rowsMax="4"
+                            value={this.state.newAppointmentDescription}
+                            onChange={this.handleChange("newAppointmentDescription")}
+                        />
                     </div>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={this.handleClose} color="primary">
+                    <Button onClick={this.handleSave} color="primary">
                         Save
                     </Button>
-                    <Button onClick={this.handleClose} color="primary">
+                    <Button onClick={this.handleCancel} color="primary">
                         Cancel
                     </Button>
                 </DialogActions>
