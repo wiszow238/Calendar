@@ -31,7 +31,20 @@ export default class Home extends Component {
     };
 
     handleSave = () => {
-        this.setState({open: false});
+        if ((new Date(this.state.newAppointmentDate) == "Invalid Date") ||
+            this.state.newAppointmentDate === "" ||
+            this.state.appointments.has(this.state.newAppointmentDate)) {
+            //TODO::Adds exception handling
+        }
+
+        this.state.appointments.set(this.state.newAppointmentDate, {
+            time: this.state.newAppointmentTime,
+            description: this.state.newAppointmentDescription
+        });
+
+        this.setState({
+            open: false,
+        });
     };
 
     handleCancel = () => {
@@ -68,7 +81,10 @@ export default class Home extends Component {
 
         let weeks = [];
         for (let weekNumber = 0; weekNumber < 5; weekNumber++) {
-            weeks.push(<Week key={weekNumber} date={startOfWeek.toDateString()} openDialog={this.handleClickOpen}/>);
+            weeks.push(<Week key={weekNumber}
+                             date={startOfWeek.toDateString()}
+                             openDialog={this.handleClickOpen}
+                             appointments={this.state.appointments}/>);
             startOfWeek.setDate(startOfWeek.getDate() + 7);
         }
 

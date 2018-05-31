@@ -16,9 +16,32 @@ export default class Week extends Component {
         }
 
         return (
-            <Button mini variant="fab" color="primary" aria-label="add" onClick={this.props.openDialog.bind(this, renderDate.toString())}>
-                <AddIcon/>
-            </Button>
+            <div>
+                <Button mini variant="fab"
+                        color="primary"
+                        aria-label="add"
+                        onClick={this.props.openDialog.bind(this, renderDate.toString())}>
+                    <AddIcon/>
+                </Button>
+            </div>
+        )
+    };
+
+    renderAppointmentLabel = (renderDate) => {
+        let isoDate = (new Date(renderDate)).toISOString().split('T')[0];
+        if (!this.props.appointments.has(isoDate)) {
+            return;
+        }
+        let appointment = this.props.appointments.get(isoDate);
+
+        return (
+            <div>
+                <Button mini color="secondary"
+                        size="small"
+                        value={isoDate}>
+                    Appointment
+                </Button>
+            </div>
         )
     };
 
@@ -30,6 +53,7 @@ export default class Week extends Component {
             renderedDays.push(
                 <TableCell key={dayNumber} numeric>
                     {date.getDate()}
+                    {this.renderAppointmentLabel(date)}
                     {this.renderButton(date)}
                 </TableCell>
             );

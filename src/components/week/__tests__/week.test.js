@@ -8,7 +8,7 @@ describe('Home', () => {
 
     beforeEach(() => {
         const context = { table: {} };
-        wrapper = shallow(<Week date="Sun Apr 29 2018"/>, context);
+        wrapper = shallow(<Week date="Sun Apr 29 2018" appointments={new Map()}/>, context);
     });
 
     describe('renders', () => {
