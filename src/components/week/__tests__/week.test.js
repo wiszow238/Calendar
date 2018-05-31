@@ -1,6 +1,6 @@
 import React from "react";
 import {shallow} from "enzyme";
-import Week from "../week";
+import Week from "../Week";
 import TableCell from '@material-ui/core/TableCell';
 
 describe('Home', () => {

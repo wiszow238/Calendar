@@ -1,13 +1,31 @@
 import React, {Component} from 'react';
-import Week from "../week/week";
+import Week from "../week/Week";
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 export default class Home extends Component {
+    state = {
+        open: false,
+    };
+
+    handleClickOpen = () => {
+        this.setState({open: true});
+    };
+
+    handleClose = () => {
+        this.setState({open: false});
+    };
+
     renderMonth = () => {
         const monthLabels = ["January", "February", "March", "April", "May", "June",
             "July", "August", "September", "October", "November", "December"
@@ -32,36 +50,72 @@ export default class Home extends Component {
 
         let weeks = [];
         for (let weekNumber = 0; weekNumber < 5; weekNumber++) {
-            weeks.push(<Week key={weekNumber} date={startOfWeek.toDateString()}/>);
+            weeks.push(<Week key={weekNumber} date={startOfWeek.toDateString()} openDialog={this.handleClickOpen}/>);
             startOfWeek.setDate(startOfWeek.getDate() + 7);
         }
 
         return weeks;
     };
 
+    renderAppointmentDialog = () => {
+        return (
+            <Dialog
+                open={this.state.open}
+                onClose={this.handleClose}
+                aria-labelledby="form-dialog-title"
+            >
+                <DialogTitle>
+                    New Appointment
+                </DialogTitle>
+                <DialogContent>
+                    <div>
+                        Appointment Date: <TextField/>
+                    </div>
+                    <div>
+                        Appointment Time: <TextField/>
+                    </div>
+                    <div>
+                        Description: <TextField/>
+                    </div>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={this.handleClose} color="primary">
+                        Save
+                    </Button>
+                    <Button onClick={this.handleClose} color="primary">
+                        Cancel
+                    </Button>
+                </DialogActions>
+            </Dialog>
+        );
+    };
+
     render() {
         return (
-            <Paper className="root">
-                <Table className="table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell colSpan="7">{this.renderMonth()}</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        <TableRow>
-                            <TableCell>SUN</TableCell>
-                            <TableCell>MON</TableCell>
-                            <TableCell>TUE</TableCell>
-                            <TableCell>WED</TableCell>
-                            <TableCell>THU</TableCell>
-                            <TableCell>FRI</TableCell>
-                            <TableCell>SAT</TableCell>
-                        </TableRow>
-                        {this.renderDays()}
-                    </TableBody>
-                </Table>
-            </Paper>
+            <div>
+                <Paper className="root">
+                    <Table className="table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell colSpan="7">{this.renderMonth()}</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            <TableRow>
+                                <TableCell>SUN</TableCell>
+                                <TableCell>MON</TableCell>
+                                <TableCell>TUE</TableCell>
+                                <TableCell>WED</TableCell>
+                                <TableCell>THU</TableCell>
+                                <TableCell>FRI</TableCell>
+                                <TableCell>SAT</TableCell>
+                            </TableRow>
+                            {this.renderDays()}
+                        </TableBody>
+                    </Table>
+                </Paper>
+                {this.renderAppointmentDialog()}
+            </div>
         );
     }
 }

@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@material-ui/core": "latest",
+    "@material-ui/icons": "latest",
     "babel-preset-env": "^1.7.0",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
