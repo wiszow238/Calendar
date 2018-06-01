@@ -62,6 +62,15 @@ export default class Home extends Component {
     };
 
     handleCancel = () => {
+        this.resetAppointmentDialogState();
+    };
+
+    handleDelete = () => {
+        this.state.appointments.delete(this.state.appointmentDate);
+        this.resetAppointmentDialogState();
+    };
+
+    resetAppointmentDialogState = () => {
         this.setState({
             open: false,
             appointmentAction: "",
@@ -115,9 +124,15 @@ export default class Home extends Component {
     renderAppointmentDialog = () => {
         let dialogTitle = "New Appointment";
         let dateDisabled = false;
+        let deleteButton = "";
         if (this.state.appointmentAction === "edit") {
             dialogTitle = "Edit Appointment";
             dateDisabled = true;
+            deleteButton = (
+                <Button onClick={this.handleDelete} color="primary">
+                    Delete
+                </Button>
+            );
         }
 
         return (
@@ -160,6 +175,7 @@ export default class Home extends Component {
                     <Button onClick={this.handleSave} color="primary">
                         Save
                     </Button>
+                    {deleteButton}
                     <Button onClick={this.handleCancel} color="primary">
                         Cancel
                     </Button>
