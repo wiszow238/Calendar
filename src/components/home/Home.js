@@ -21,7 +21,8 @@ export default class Home extends Component {
         appointmentAction: "",
         appointmentDate: "",
         appointmentTime: "",
-        appointmentDescription: ""
+        appointmentDescription: "",
+        errorMessage: ""
     };
 
     handleClickOpen = (date) => {
@@ -59,9 +60,20 @@ export default class Home extends Component {
 
     handleSave = () => {
         if ((new Date(this.state.appointmentDate) == "Invalid Date") ||
-            this.state.appointmentDate === "" ||
-            this.state.appointments.has(this.state.appointmentDate)) {
-            //TODO::Adds exception handling
+            this.state.appointmentDate === "") {
+            this.setState({errorMessage: "Invalid date entered"});
+            return;
+        }
+
+        let newAppointmentTime = "23:59:59";
+        if (this.state.appointmentTime !== "") {
+            newAppointmentTime = this.state.appointmentTime + ":00";
+        }
+        let newAppointmentDate = this.state.appointmentDate + "T" + newAppointmentTime;
+        let currentDate = new Date();
+        if (currentDate > new Date(newAppointmentDate)) {
+            this.setState({errorMessage: "You can not create a new \n appointment that is in the past."});
+            return;
         }
 
         this.state.appointments.set(this.state.appointmentDate, {
@@ -97,7 +109,8 @@ export default class Home extends Component {
             appointmentAction: "",
             appointmentDate: "",
             appointmentTime: "",
-            appointmentDescription: ""
+            appointmentDescription: "",
+            errorMessage: ""
         });
     };
 
@@ -186,6 +199,9 @@ export default class Home extends Component {
                                    rowsMax="4"
                                    value={this.state.appointmentDescription}
                                    onChange={this.handleChange("appointmentDescription")}/>
+                    </div>
+                    <div>
+                        {this.state.errorMessage}
                     </div>
                 </DialogContent>
                 <DialogActions>
