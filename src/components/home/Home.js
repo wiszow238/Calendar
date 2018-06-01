@@ -17,29 +17,43 @@ export default class Home extends Component {
     state = {
         open: false,
         appointments: new Map(),
-        newAppointmentDate: "",
-        newAppointmentTime: "",
-        newAppointmentDescription: ""
+        appointmentAction: "",
+        appointmentDate: "",
+        appointmentTime: "",
+        appointmentDescription: ""
     };
 
     handleClickOpen = (date) => {
         date = (new Date(date)).toISOString().split('T')[0];
         this.setState({
             open: true,
-            newAppointmentDate: date
+            appointmentAction: "save",
+            appointmentDate: date
+        });
+    };
+
+    handleEditClick = (date) => {
+        let appointment = this.state.appointments.get(date);
+
+        this.setState({
+            open: true,
+            appointmentAction: "edit",
+            appointmentDate: date,
+            appointmentTime: appointment.time,
+            appointmentDescription: appointment.description
         });
     };
 
     handleSave = () => {
-        if ((new Date(this.state.newAppointmentDate) == "Invalid Date") ||
-            this.state.newAppointmentDate === "" ||
-            this.state.appointments.has(this.state.newAppointmentDate)) {
+        if ((new Date(this.state.appointmentDate) == "Invalid Date") ||
+            this.state.appointmentDate === "" ||
+            this.state.appointments.has(this.state.appointmentDate)) {
             //TODO::Adds exception handling
         }
 
-        this.state.appointments.set(this.state.newAppointmentDate, {
-            time: this.state.newAppointmentTime,
-            description: this.state.newAppointmentDescription
+        this.state.appointments.set(this.state.appointmentDate, {
+            time: this.state.appointmentTime,
+            description: this.state.appointmentDescription
         });
 
         this.setState({
@@ -48,7 +62,13 @@ export default class Home extends Component {
     };
 
     handleCancel = () => {
-        this.setState({open: false});
+        this.setState({
+            open: false,
+            appointmentAction: "",
+            appointmentDate: "",
+            appointmentTime: "",
+            appointmentDescription: ""
+        });
     };
 
     handleChange = name => event => {
@@ -84,7 +104,8 @@ export default class Home extends Component {
             weeks.push(<Week key={weekNumber}
                              date={startOfWeek.toDateString()}
                              openDialog={this.handleClickOpen}
-                             appointments={this.state.appointments}/>);
+                             appointments={this.state.appointments}
+                             editDialog={this.handleEditClick}/>);
             startOfWeek.setDate(startOfWeek.getDate() + 7);
         }
 
@@ -92,33 +113,38 @@ export default class Home extends Component {
     };
 
     renderAppointmentDialog = () => {
+        let dialogTitle = "New Appointment";
+        let dateDisabled = false;
+        if (this.state.appointmentAction === "edit") {
+            dialogTitle = "Edit Appointment";
+            dateDisabled = true;
+        }
+
         return (
             <Dialog
                 open={this.state.open}
                 onClose={this.handleClose}
-                aria-labelledby="form-dialog-title"
-            >
+                aria-labelledby="form-dialog-title">
                 <DialogTitle>
-                    New Appointment
+                    {dialogTitle}
                 </DialogTitle>
                 <DialogContent>
                     <div>
                         <TextField
                             id="appointmentDate"
                             label="Appointment Date"
+                            disabled={dateDisabled}
                             type="date"
-                            value={this.state.newAppointmentDate}
-                            onChange={this.handleChange("newAppointmentDate")}
-                        />
+                            value={this.state.appointmentDate}
+                            onChange={this.handleChange("appointmentDate")}/>
                     </div>
                     <div>
                         <TextField
                             id="appointmentTime"
                             label="Appointment Time"
                             type="time"
-                            value={this.state.newAppointmentTime}
-                            onChange={this.handleChange("newAppointmentTime")}
-                        />
+                            value={this.state.appointmentTime}
+                            onChange={this.handleChange("appointmentTime")}/>
                     </div>
                     <div>
                         <TextField
@@ -126,9 +152,8 @@ export default class Home extends Component {
                             label="Description"
                             multiline
                             rowsMax="4"
-                            value={this.state.newAppointmentDescription}
-                            onChange={this.handleChange("newAppointmentDescription")}
-                        />
+                            value={this.state.appointmentDescription}
+                            onChange={this.handleChange("appointmentDescription")}/>
                     </div>
                 </DialogContent>
                 <DialogActions>

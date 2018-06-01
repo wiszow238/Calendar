@@ -33,13 +33,12 @@ export default class Week extends Component {
         if (!this.props.appointments.has(isoDate)) {
             return;
         }
-        let appointment = this.props.appointments.get(isoDate);
 
         return (
             <div>
                 <Button mini color="secondary"
                         size="small"
-                        value={isoDate}>
+                        onClick={this.props.editDialog.bind(this, isoDate)}>
                     Appointment
                 </Button>
             </div>
