@@ -6,12 +6,8 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import WarningDialog from "../dialog/WarningDialog";
+import AppointmentDialog from "../dialog/AppointmentDialog";
 
 export default class Home extends Component {
     state = {
@@ -114,7 +110,7 @@ export default class Home extends Component {
         });
     };
 
-    handleChange = name => event => {
+    handleChange = (name, event) => {
         this.setState({
             [name]: event.target.value,
         });
@@ -155,92 +151,6 @@ export default class Home extends Component {
         return weeks;
     };
 
-    renderAppointmentDialog = () => {
-        let dialogTitle = "New Appointment";
-        let dateDisabled = false;
-        let deleteButton = "";
-        if (this.state.appointmentAction === "edit") {
-            dialogTitle = "Edit Appointment";
-            dateDisabled = true;
-            deleteButton = (
-                <Button onClick={this.handleDelete} color="primary">
-                    Delete
-                </Button>
-            );
-        }
-
-        return (
-            <Dialog open={this.state.appointmentDialogOpen}
-                    onClose={this.handleClose}
-                    aria-labelledby="form-dialog-title">
-                <DialogTitle>
-                    {dialogTitle}
-                </DialogTitle>
-                <DialogContent>
-                    <div>
-                        <TextField id="appointmentDate"
-                                   label="Appointment Date"
-                                   disabled={dateDisabled}
-                                   type="date"
-                                   value={this.state.appointmentDate}
-                                   onChange={this.handleChange("appointmentDate")}/>
-                    </div>
-                    <div>
-                        <TextField id="appointmentTime"
-                                   label="Appointment Time"
-                                   type="time"
-                                   value={this.state.appointmentTime}
-                                   onChange={this.handleChange("appointmentTime")}/>
-                    </div>
-                    <div>
-                        <TextField id="description"
-                                   label="Description"
-                                   multiline
-                                   rowsMax="4"
-                                   value={this.state.appointmentDescription}
-                                   onChange={this.handleChange("appointmentDescription")}/>
-                    </div>
-                    <div>
-                        {this.state.errorMessage}
-                    </div>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={this.handleSave} color="primary">
-                        Save
-                    </Button>
-                    {deleteButton}
-                    <Button onClick={this.handleCancel} color="primary">
-                        Cancel
-                    </Button>
-                </DialogActions>
-            </Dialog>
-        );
-    };
-
-    renderWarningDialog = () => {
-        return (
-            <Dialog open={this.state.warningDialogOpen}
-                    onClose={this.handleClose}
-                    aria-labelledby="form-dialog-title">
-                <DialogTitle>
-                    Warning!
-                </DialogTitle>
-                <DialogContent>
-                    An appointment exists for this date.
-                    Are you sure you want to continue and override the existing appointment?
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={this.handleWarningYes} color="primary">
-                        Yes
-                    </Button>
-                    <Button onClick={this.handleCancel} color="primary">
-                        No
-                    </Button>
-                </DialogActions>
-            </Dialog>
-        );
-    };
-
     render() {
         return (
             <div>
@@ -265,8 +175,22 @@ export default class Home extends Component {
                         </TableBody>
                     </Table>
                 </Paper>
-                {this.renderWarningDialog()}
-                {this.renderAppointmentDialog()}
+                <WarningDialog warningDialogOpen={this.state.warningDialogOpen}
+                               handleClose={this.handleClose}
+                               handleWarningYes={this.handleWarningYes}
+                               handleCancel={this.handleCancel}/>
+
+                <AppointmentDialog appointmentDate={this.state.appointmentDate}
+                                   appointmentTime={this.state.appointmentTime}
+                                   appointmentDescription={this.state.appointmentDescription}
+                                   appointmentDialogOpen={this.state.appointmentDialogOpen}
+                                   appointmentAction={this.state.appointmentAction}
+                                   errorMessage={this.state.errorMessage}
+                                   handleClose={this.handleClose}
+                                   handleDelete={this.handleDelete}
+                                   handleChange={this.handleChange}
+                                   handleCancel={this.handleCancel}
+                                   handleSave={this.handleSave}/>
             </div>
         );
     }

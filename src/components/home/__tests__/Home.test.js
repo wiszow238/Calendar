@@ -8,6 +8,8 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import WarningDialog from "../../dialog/WarningDialog";
+import AppointmentDialog from "../../dialog/AppointmentDialog";
 
 describe('Home', () => {
     let wrapper;
@@ -53,8 +55,44 @@ describe('Home', () => {
             expect(thead.find(TableCell).render().text()).toBe("March 2018");
         });
 
+        it('warning dialog', () => {
+            wrapper.setState({warningDialogOpen: 'someValue'});
+
+            let warningDialog = wrapper.find(WarningDialog);
+
+            expect(warningDialog.length).toBe(1);
+            expect(warningDialog.prop('warningDialogOpen')).toBe('someValue');
+            expect(warningDialog.prop('handleWarningYes')).toBe(wrapper.instance().handleWarningYes);
+            expect(warningDialog.prop('handleCancel')).toBe(wrapper.instance().handleCancel);
+        });
+
+        it('appointment dialog', () => {
+            wrapper.setState({
+                appointmentDate: "someDate",
+                appointmentTime: "someTime",
+                appointmentDescription: "someDescription",
+                appointmentDialogOpen: "someOpen",
+                appointmentAction: 'someValue',
+                errorMessage: "someError"
+            });
+
+            let appointmentDialog = wrapper.find(AppointmentDialog);
+
+            expect(appointmentDialog.length).toBe(1);
+            expect(appointmentDialog.prop('appointmentDate')).toBe('someDate');
+            expect(appointmentDialog.prop('appointmentTime')).toBe('someTime');
+            expect(appointmentDialog.prop('appointmentDescription')).toBe('someDescription');
+            expect(appointmentDialog.prop('appointmentDialogOpen')).toBe('someOpen');
+            expect(appointmentDialog.prop('appointmentAction')).toBe('someValue');
+            expect(appointmentDialog.prop('errorMessage')).toBe('someError');
+            expect(appointmentDialog.prop('handleDelete')).toBe(wrapper.instance().handleDelete);
+            expect(appointmentDialog.prop('handleChange')).toBe(wrapper.instance().handleChange);
+            expect(appointmentDialog.prop('handleCancel')).toBe(wrapper.instance().handleCancel);
+            expect(appointmentDialog.prop('handleSave')).toBe(wrapper.instance().handleSave);
+        });
+
         describe('week rows', () => {
-            it('day label row', () => {
+            it('correct day labels', () => {
                 let row = table.find(TableBody).find(TableRow).at(0);
 
                 expect(row.find(TableCell).at(0).render().text()).toBe('SUN');
