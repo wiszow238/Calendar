@@ -8,8 +8,16 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import WarningDialog from "../dialog/WarningDialog";
 import AppointmentDialog from "../dialog/AppointmentDialog";
+import {withStyles} from '@material-ui/core/styles';
 
-export default class Home extends Component {
+const styles = {
+    cell: {
+        padding: "initial",
+        paddingLeft: "87px"
+    }
+};
+
+export class Home extends Component {
     state = {
         warningDialogOpen: false,
         appointmentDialogOpen: false,
@@ -152,6 +160,7 @@ export default class Home extends Component {
     };
 
     render() {
+        const {classes} = this.props;
         return (
             <div>
                 <Paper className="root">
@@ -163,13 +172,13 @@ export default class Home extends Component {
                         </TableHead>
                         <TableBody>
                             <TableRow>
-                                <TableCell>SUN</TableCell>
-                                <TableCell>MON</TableCell>
-                                <TableCell>TUE</TableCell>
-                                <TableCell>WED</TableCell>
-                                <TableCell>THU</TableCell>
-                                <TableCell>FRI</TableCell>
-                                <TableCell>SAT</TableCell>
+                                <TableCell classes={{root: classes.cell}}>SUN</TableCell>
+                                <TableCell classes={{root: classes.cell}}>MON</TableCell>
+                                <TableCell classes={{root: classes.cell}}>TUE</TableCell>
+                                <TableCell classes={{root: classes.cell}}>WED</TableCell>
+                                <TableCell classes={{root: classes.cell}}>THU</TableCell>
+                                <TableCell classes={{root: classes.cell}}>FRI</TableCell>
+                                <TableCell classes={{root: classes.cell}}>SAT</TableCell>
                             </TableRow>
                             {this.renderDays()}
                         </TableBody>
@@ -195,3 +204,5 @@ export default class Home extends Component {
         );
     }
 }
+
+export default withStyles(styles)(Home);

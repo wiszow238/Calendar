@@ -5,13 +5,23 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
+import {withStyles} from "@material-ui/core/styles/index";
 
-export default class AppointmentDialog extends Component {
+const styles = {
+    button: {
+        width: "100%"
+    }
+};
+
+
+export class AppointmentDialog extends Component {
     constructor(props) {
         super(props);
     }
 
     render() {
+        const {classes} = this.props;
+
         let dialogTitle = "New Appointment";
         let dateDisabled = false;
         let deleteButton = "";
@@ -39,21 +49,30 @@ export default class AppointmentDialog extends Component {
                                    disabled={dateDisabled}
                                    type="date"
                                    value={this.props.appointmentDate}
+                                   classes={{root: classes.button}}
                                    onChange={this.props.handleChange.bind(this, "appointmentDate")}/>
                     </div>
                     <div>
                         <TextField id="time"
                                    label="Appointment Time"
+                                   InputLabelProps={{
+                                       shrink: true,
+                                   }}
                                    type="time"
                                    value={this.props.appointmentTime}
+                                   classes={{root: classes.button}}
                                    onChange={this.props.handleChange.bind(this, "appointmentTime")}/>
                     </div>
                     <div>
                         <TextField id="description"
                                    label="Description"
+                                   InputLabelProps={{
+                                       shrink: true,
+                                   }}
                                    multiline
                                    rowsMax="4"
                                    value={this.props.appointmentDescription}
+                                   classes={{root: classes.button}}
                                    onChange={this.props.handleChange.bind(this, "appointmentDescription")}/>
                     </div>
                     <div>
@@ -73,3 +92,5 @@ export default class AppointmentDialog extends Component {
         );
     }
 }
+
+export default withStyles(styles)(AppointmentDialog);

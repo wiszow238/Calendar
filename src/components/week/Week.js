@@ -3,15 +3,31 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
+import {withStyles} from '@material-ui/core/styles';
 
-export default class Week extends Component {
+const styles = {
+    addButton: {
+        width: "34px",
+        height: "30px"
+    },
+    addIcon: {
+        fontSize: "18px"
+    },
+    cell: {
+        border: "1px solid rgba(224, 224, 224, 1)"
+    }
+};
+
+export class Week extends Component {
     constructor(props) {
         super(props);
     }
 
     renderButton = (renderDate) => {
+        const {classes} = this.props;
+
         let currentDate = new Date();
-        currentDate.setDate(currentDate.getDate()-1);
+        currentDate.setDate(currentDate.getDate() - 1);
         if (renderDate < currentDate) {
             return;
         }
@@ -21,8 +37,9 @@ export default class Week extends Component {
                 <Button mini variant="fab"
                         color="primary"
                         aria-label="add"
-                        onClick={this.props.openDialog.bind(this, renderDate.toString())}>
-                    <AddIcon/>
+                        onClick={this.props.openDialog.bind(this, renderDate.toString())}
+                        classes={{root: classes.addButton}}>
+                    <AddIcon classes={{root: classes.addIcon}}/>
                 </Button>
             </div>
         )
@@ -46,13 +63,17 @@ export default class Week extends Component {
     };
 
     renderDayNumbers = () => {
+        const {classes} = this.props;
         let date = new Date(this.props.date);
         let renderedDays = [];
 
         for (let dayNumber = 0; dayNumber < 7; dayNumber++) {
             renderedDays.push(
-                <TableCell key={dayNumber} numeric>
-                    {date.getDate()}
+                <TableCell key={dayNumber} numeric
+                           classes={{root: classes.cell}}>
+                    <div>
+                        {date.getDate()}
+                    </div>
                     {this.renderAppointmentLabel(date)}
                     {this.renderButton(date)}
                 </TableCell>
@@ -71,3 +92,5 @@ export default class Week extends Component {
         );
     }
 }
+
+export default withStyles(styles)(Week);

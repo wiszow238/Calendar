@@ -1,5 +1,5 @@
 import React from "react";
-import {shallow} from "enzyme";
+import {mount} from "enzyme";
 import Week from "../Week";
 import TableCell from '@material-ui/core/TableCell';
 
@@ -8,7 +8,7 @@ describe('Home', () => {
 
     beforeEach(() => {
         const context = { table: {} };
-        wrapper = shallow(<Week date="Sun Apr 29 2018" appointments={new Map()}/>, context);
+        wrapper = mount(<Week date="Sun Apr 29 2018" appointments={new Map()}/>, context);
     });
 
     describe('renders', () => {
