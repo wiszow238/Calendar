@@ -45,14 +45,17 @@ describe('Home', () => {
             expect(thead.find(TableCell).prop("colSpan")).toBe("7");
         });
 
-        it.skip('correct month and year', () => {
-            global.Date = jest.fn(() => fixedDate);
-            global.Date.setDate = originalDate.setDate;
-            wrapper = shallow(<Home/>);
+        it('correct month and year', () => {
+            const monthLabels = ["January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"
+            ];
+            let date = new Date();
+            wrapper = mount(<Home/>);
 
             let thead = wrapper.find(TableHead);
 
-            expect(thead.find(TableCell).render().text()).toBe("March 2018");
+            let expectedDate = monthLabels[date.getMonth()] + " " + date.getFullYear();
+            expect(thead.find(TableCell).render().text()).toBe(expectedDate);
         });
 
         it.skip('warning dialog', () => {
