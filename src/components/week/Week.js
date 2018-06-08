@@ -19,8 +19,11 @@ const styles = {
         textAlign: "left",
         verticalAlign: "top",
         position: "relative",
-        width: "14%",
+        width: "14.39%",
         height: "50px"
+    },
+    differentMonthCell: {
+        backgroundColor: "#f5f5f5",
     }
 };
 
@@ -74,10 +77,11 @@ export class Week extends Component {
         let renderedDays = [];
 
         for (let dayNumber = 0; dayNumber < 7; dayNumber++) {
+            let cellStyle = classes.cell;
             renderedDays.push(
                 <TableCell key={dayNumber} numeric
-                           classes={{root: classes.cell}}>
-                    <div>
+                           classes={{root: cellStyle}}>
+                    <div className="day-number">
                         {date.getDate()}
                     </div>
                     {this.renderAppointmentLabel(date)}

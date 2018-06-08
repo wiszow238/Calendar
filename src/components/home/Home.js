@@ -14,7 +14,14 @@ const styles = {
     cell: {
         padding: "unset",
         textAlign: "unset",
-        verticalAlign: "unset",
+        verticalAlign: "middle",
+        fontSize: "1rem",
+        fontWeight: "500"
+    },
+    dayNameRow: {
+        height: "20px",
+        textAlign: "center",
+        verticalAlign: "middle"
     }
 };
 
@@ -172,7 +179,7 @@ export class Home extends Component {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            <TableRow>
+                            <TableRow classes={{root: classes.dayNameRow}}>
                                 <TableCell classes={{root: classes.cell}}>SUN</TableCell>
                                 <TableCell classes={{root: classes.cell}}>MON</TableCell>
                                 <TableCell classes={{root: classes.cell}}>TUE</TableCell>
