@@ -12,8 +12,9 @@ import {withStyles} from '@material-ui/core/styles';
 
 const styles = {
     cell: {
-        padding: "initial",
-        paddingLeft: "87px"
+        padding: "unset",
+        textAlign: "unset",
+        verticalAlign: "unset",
     }
 };
 

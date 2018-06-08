@@ -14,7 +14,13 @@ const styles = {
         fontSize: "18px"
     },
     cell: {
-        border: "1px solid rgba(224, 224, 224, 1)"
+        border: "1px solid rgba(224, 224, 224, 1)",
+        padding: "unset",
+        textAlign: "left",
+        verticalAlign: "top",
+        position: "relative",
+        width: "14%",
+        height: "50px"
     }
 };
 
@@ -33,7 +39,7 @@ export class Week extends Component {
         }
 
         return (
-            <div>
+            <div className="add-button">
                 <Button mini variant="fab"
                         color="primary"
                         aria-label="add"
