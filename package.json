@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "test-debug": "jest --debug",
     "test": "jest",
-    "dev": "./node_modules/.bin/webpack-dev-server --config ./webpack/webpack.dev.config.js"
+    "build": "webpack --mode development",
+    "dev": "./node_modules/.bin/webpack-dev-server --mode development --config ./webpack/webpack.dev.config.js"
   },
   "author": "David Wiszowaty",
   "license": "ISC",
@@ -23,20 +25,19 @@
     "setupTestFrameworkScriptFile": "<rootDir>/src/setupTests.js"
   },
   "dependencies": {
-    "@material-ui/core": "^1.1.0",
+    "@material-ui/core": "^1.4.0",
     "@material-ui/icons": "latest",
     "babel-preset-env": "^1.7.0",
-    "classnames": "^2.2.5",
+    "classnames": "^2.2.6",
     "prop-types": "latest",
-    "react": "^16.4.0",
-    "react-dom": "^16.4.0",
-    "webpack": "^4.10.2",
-    "webpack-dev-server": "^3.1.4"
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "webpack": "^4.16.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.4",
+    "babel-loader": "^7.1.5",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
@@ -46,9 +47,10 @@
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "jest": "^16.0.2",
-    "less": "^3.0.4",
+    "less": "^3.7.1",
     "less-loader": "^4.1.0",
     "style-loader": "^0.21.0",
-    "webpack-cli": "^2.1.5"
+    "webpack-cli": "^2.1.5",
+    "webpack-dev-server": "^3.1.4"
   }
 }

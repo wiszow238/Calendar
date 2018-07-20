@@ -145,8 +145,12 @@ export class Home extends Component {
 
     getStartOfWeek = (d) => {
         let date = new Date(d);
+        if (date.getDay() === 0) {
+            return date;
+        }
+
         let day = date.getDay();
-        let diff = date.getDate() - day + (day === 0 ? -6 : 0);
+        let diff = date.getDate() - day + (day === 0 ? -7 : 0);
         return new Date(date.setDate(diff));
     };
 
@@ -158,6 +162,7 @@ export class Home extends Component {
         for (let weekNumber = 0; weekNumber < 5; weekNumber++) {
             weeks.push(<Week key={weekNumber}
                              date={startOfWeek.toDateString()}
+                             selectedMonth={currentDate.getMonth()}
                              openDialog={this.handleClickOpen}
                              appointments={this.state.appointments}
                              editDialog={this.handleEditClick}/>);
@@ -171,7 +176,7 @@ export class Home extends Component {
         const {classes} = this.props;
         return (
             <div>
-                <Paper className="root">
+                <Paper className="table">
                     <Table className="table">
                         <TableHead>
                             <TableRow>

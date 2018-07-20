@@ -15,12 +15,12 @@ const styles = {
     },
     cell: {
         border: "1px solid rgba(224, 224, 224, 1)",
-        padding: "unset",
+        padding: "10px",
         textAlign: "left",
         verticalAlign: "top",
         position: "relative",
         width: "14.39%",
-        height: "50px"
+        height: "50px",
     },
     differentMonthCell: {
         backgroundColor: "#f5f5f5",
@@ -78,10 +78,19 @@ export class Week extends Component {
 
         for (let dayNumber = 0; dayNumber < 7; dayNumber++) {
             let cellStyle = classes.cell;
+            let bodyStyle = "";
+            let dayStyle = "day-number ";
+            if (date.getMonth() !== this.props.selectedMonth) {
+                bodyStyle = classes.differentMonthCell;
+            }
+            if(date.getDate() === new Date().getDate()) {
+                dayStyle += "current-day";
+            }
+
             renderedDays.push(
                 <TableCell key={dayNumber} numeric
-                           classes={{root: cellStyle}}>
-                    <div className="day-number">
+                           classes={{root: cellStyle, body: bodyStyle}}>
+                    <div className={dayStyle}>
                         {date.getDate()}
                     </div>
                     {this.renderAppointmentLabel(date)}
