@@ -282,5 +282,63 @@ describe('Home', () => {
             expect(wrapper.instance().state.appointmentDescription).toEqual("");
             expect(wrapper.instance().state.errorMessage).toEqual("");
         });
+
+        it('handleWarningYes sets correct state', () => {
+            wrapper.setState({
+                warningDialogOpen: true,
+                appointmentDialogOpen: false,
+                appointmentTime: "value",
+                appointmentDescription: "value"
+            });
+
+            wrapper.instance().handleWarningYes();
+
+            expect(wrapper.instance().state.warningDialogOpen).toEqual(false);
+            expect(wrapper.instance().state.appointmentDialogOpen).toEqual(true);
+            expect(wrapper.instance().state.appointmentTime).toEqual("");
+            expect(wrapper.instance().state.appointmentDescription).toEqual("");
+        });
+
+        it('handleChange sets state given parameters', () => {
+            wrapper.setState({
+                stateName: ""
+            });
+
+            wrapper.instance().handleChange("stateName", {target: {value: "someValue"}});
+
+            expect(wrapper.instance().state.stateName).toEqual("someValue");
+        });
+
+        it('handleNextMonthClick sets the current month to next month in state', () => {
+            wrapper.setState({
+                displayMonth: new Date("01/01/2018")
+            });
+
+            wrapper.instance().handleNextMonthClick();
+
+            expect(wrapper.instance().state.displayMonth).toEqual(new Date("02/01/2018"));
+        });
+
+        it('handlePrevMonthClick sets the current month to previous month in state', () => {
+            wrapper.setState({
+                displayMonth: new Date("02/01/2018")
+            });
+
+            wrapper.instance().handlePrevMonthClick();
+
+            expect(wrapper.instance().state.displayMonth).toEqual(new Date("01/01/2018"));
+        });
+
+        it('getStartOfWeek returns the start of the week given the passed in date', () => {
+            let returnValue = wrapper.instance().getStartOfWeek("08/17/2018");
+
+            expect(returnValue).toEqual(new Date("08/12/2018"));
+        });
+
+        it('getStartOfWeek returns current date when passed in date is start of week', () => {
+            let returnValue = wrapper.instance().getStartOfWeek("08/19/2018");
+
+            expect(returnValue).toEqual(new Date("08/19/2018"));
+        });
     });
 });
