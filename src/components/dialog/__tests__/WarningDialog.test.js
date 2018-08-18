@@ -26,43 +26,43 @@ describe('WarningDialog', () => {
 
     describe('render', () => {
         it('dialog component', () => {
-            expect(wrapper.find(Dialog).length).toBe(1);
-            expect(wrapper.find(Dialog).prop('open')).toBe(true);
-            expect(wrapper.find(Dialog).prop('onClose')).toBe(mockHandleClose);
-            expect(wrapper.find(Dialog).prop('aria-labelledby')).toBe("form-dialog-title");
+            expect(wrapper.find(Dialog).length).toEqual(1);
+            expect(wrapper.find(Dialog).prop('open')).toEqual(true);
+            expect(wrapper.find(Dialog).prop('onClose')).toEqual(mockHandleClose);
+            expect(wrapper.find(Dialog).prop('aria-labelledby')).toEqual("form-dialog-title");
         });
 
         it('dialog title', () => {
-            expect(wrapper.find(DialogTitle).length).toBe(1);
-            expect(wrapper.find(DialogTitle).render().text()).toBe("Warning!");
+            expect(wrapper.find(DialogTitle).length).toEqual(1);
+            expect(wrapper.find(DialogTitle).render().text()).toEqual("Warning!");
         });
 
         it('dialog content', () => {
-            expect(wrapper.find(DialogContent).length).toBe(1);
-            expect(wrapper.find(DialogContent).render().text()).toBe("An appointment exists for this date. " +
+            expect(wrapper.find(DialogContent).length).toEqual(1);
+            expect(wrapper.find(DialogContent).render().text()).toEqual("An appointment exists for this date. " +
                 "Are you sure you want to continue and override the existing appointment?");
         });
 
         it('dialog actions', () => {
-            expect(wrapper.find(DialogActions).length).toBe(1);
+            expect(wrapper.find(DialogActions).length).toEqual(1);
         });
 
         it('two buttons', () => {
-            expect(wrapper.find(Button).length).toBe(2);
+            expect(wrapper.find(Button).length).toEqual(2);
         });
 
         it('yes button', () => {
             let yesButton = wrapper.find(Button).at(0);
-            expect(yesButton.prop('onClick')).toBe(mockHandleWarningYes);
-            expect(yesButton.prop('color')).toBe("primary");
-            expect(yesButton.render().text()).toBe("Yes");
+            expect(yesButton.prop('onClick')).toEqual(mockHandleWarningYes);
+            expect(yesButton.prop('color')).toEqual("primary");
+            expect(yesButton.render().text()).toEqual("Yes");
         });
 
         it('no button', () => {
             let noButton = wrapper.find(Button).at(1);
-            expect(noButton.prop('onClick')).toBe(mockHandleCancel);
-            expect(noButton.prop('color')).toBe("primary");
-            expect(noButton.render().text()).toBe("No");
+            expect(noButton.prop('onClick')).toEqual(mockHandleCancel);
+            expect(noButton.prop('color')).toEqual("primary");
+            expect(noButton.render().text()).toEqual("No");
         });
     });
 

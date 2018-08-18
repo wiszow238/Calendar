@@ -83,7 +83,7 @@ export class Week extends Component {
             if (date.getMonth() !== this.props.selectedMonth) {
                 bodyStyle = classes.differentMonthCell;
             }
-            if(date.getDate() === new Date().getDate()) {
+            if (date.toLocaleDateString() === new Date().toLocaleDateString()) {
                 dayStyle += "current-day";
             }
 

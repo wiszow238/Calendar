@@ -22,7 +22,13 @@
     ]
   },
   "jest": {
-    "setupTestFrameworkScriptFile": "<rootDir>/src/setupTests.js"
+    "setupTestFrameworkScriptFile": "<rootDir>/src/setupTests.js",
+    "transformIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "moduleNameMapper": {
+      "^.*[.](png|PNG|svg|SVG|jpg|JPG|gif|GIF|css|less)$": "EmptyModule"
+    }
   },
   "dependencies": {
     "@material-ui/core": "^1.4.0",
@@ -46,7 +52,7 @@
     "css-loader": "^0.28.11",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
-    "jest": "^16.0.2",
+    "jest": "^23.4.1",
     "less": "^3.7.1",
     "less-loader": "^4.1.0",
     "style-loader": "^0.21.0",

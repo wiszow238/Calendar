@@ -7,8 +7,7 @@ describe('Home', () => {
     let wrapper;
 
     beforeEach(() => {
-        const context = { table: {} };
-        wrapper = mount(<Week date="Sun Apr 29 2018" appointments={new Map()}/>, context);
+        wrapper = mount(<Week date="Sun Apr 29 2018" appointments={new Map()}/>, { table: {} });
     });
 
     describe('renders', () => {
@@ -19,17 +18,17 @@ describe('Home', () => {
         });
 
         it('correct number of days', () => {
-            expect(td.length).toBe(7);
+            expect(td.length).toEqual(7);
         });
 
         it('correct day numbers', () => {
-            expect(td.at(0).render().text()).toBe("29");
-            expect(td.at(1).render().text()).toBe("30");
-            expect(td.at(2).render().text()).toBe("1");
-            expect(td.at(3).render().text()).toBe("2");
-            expect(td.at(4).render().text()).toBe("3");
-            expect(td.at(5).render().text()).toBe("4");
-            expect(td.at(6).render().text()).toBe("5");
+            expect(td.at(0).text()).toEqual("29");
+            expect(td.at(1).text()).toEqual("30");
+            expect(td.at(2).text()).toEqual("1");
+            expect(td.at(3).text()).toEqual("2");
+            expect(td.at(4).text()).toEqual("3");
+            expect(td.at(5).text()).toEqual("4");
+            expect(td.at(6).text()).toEqual("5");
         })
     });
 });

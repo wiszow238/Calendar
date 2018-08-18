@@ -23,27 +23,30 @@ describe('AppointmentDialog', () => {
         mockHandleCancel = jest.fn();
 
         wrapper = mount(<AppointmentDialog appointmentDialogOpen={true}
-                                             handleDelete={mockHandleDelete}
-                                             handleClose={mockHandleClose}
-                                             handleChange={mockHandleChange}
-                                             handleCancel={mockHandleCancel}
-                                             handleSave={mockHandleSave}/>);
+                                           appointmentDate=""
+                                           appointmentTime=""
+                                           appointmentDescription=""
+                                           handleDelete={mockHandleDelete}
+                                           handleClose={mockHandleClose}
+                                           handleChange={mockHandleChange}
+                                           handleCancel={mockHandleCancel}
+                                           handleSave={mockHandleSave}/>);
     });
 
     describe('render', () => {
         it('dialog component', () => {
-            expect(wrapper.find(Dialog).length).toBe(1);
-            expect(wrapper.find(Dialog).prop('open')).toBe(true);
-            expect(wrapper.find(Dialog).prop('onClose')).toBe(mockHandleClose);
-            expect(wrapper.find(Dialog).prop('aria-labelledby')).toBe("form-dialog-title");
+            expect(wrapper.find(Dialog).length).toEqual(1);
+            expect(wrapper.find(Dialog).prop('open')).toEqual(true);
+            expect(wrapper.find(Dialog).prop('onClose')).toEqual(mockHandleClose);
+            expect(wrapper.find(Dialog).prop('aria-labelledby')).toEqual("form-dialog-title");
         });
 
         it('dialog content', () => {
-            expect(wrapper.find(DialogContent).length).toBe(1);
+            expect(wrapper.find(DialogContent).length).toEqual(1);
         });
 
         it('dialog title', () => {
-            expect(wrapper.find(DialogTitle).length).toBe(1);
+            expect(wrapper.find(DialogTitle).length).toEqual(1);
         });
 
         it('appointment date text field', () => {
@@ -52,11 +55,11 @@ describe('AppointmentDialog', () => {
             });
 
             let appointmentDateTextField = wrapper.find('#date').at(0);
-            expect(appointmentDateTextField.length).toBe(1);
-            expect(appointmentDateTextField.prop('label')).toBe('Appointment Date');
-            expect(appointmentDateTextField.prop('disabled')).toBe(false);
-            expect(appointmentDateTextField.prop('type')).toBe('date');
-            expect(appointmentDateTextField.prop('value')).toBe('someDate');
+            expect(appointmentDateTextField.length).toEqual(1);
+            expect(appointmentDateTextField.prop('label')).toEqual('Appointment Date');
+            expect(appointmentDateTextField.prop('disabled')).toEqual(false);
+            expect(appointmentDateTextField.prop('type')).toEqual('date');
+            expect(appointmentDateTextField.prop('value')).toEqual('someDate');
         });
 
         it('appointment time text field', () => {
@@ -65,10 +68,10 @@ describe('AppointmentDialog', () => {
             });
 
             let appointmentTimeTextField = wrapper.find('#time').at(0);
-            expect(appointmentTimeTextField.length).toBe(1);
-            expect(appointmentTimeTextField.prop('label')).toBe('Appointment Time');
-            expect(appointmentTimeTextField.prop('type')).toBe('time');
-            expect(appointmentTimeTextField.prop('value')).toBe('someTime');
+            expect(appointmentTimeTextField.length).toEqual(1);
+            expect(appointmentTimeTextField.prop('label')).toEqual('Appointment Time');
+            expect(appointmentTimeTextField.prop('type')).toEqual('time');
+            expect(appointmentTimeTextField.prop('value')).toEqual('someTime');
         });
 
         it('description text field', () => {
@@ -77,33 +80,33 @@ describe('AppointmentDialog', () => {
             });
 
             let appointmentDescriptionTextField = wrapper.find('#description').at(0);
-            expect(appointmentDescriptionTextField.length).toBe(1);
-            expect(appointmentDescriptionTextField.prop('label')).toBe('Description');
-            expect(appointmentDescriptionTextField.prop('multiline')).toBe(true);
-            expect(appointmentDescriptionTextField.prop('rowsMax')).toBe('4');
-            expect(appointmentDescriptionTextField.prop('value')).toBe('someDescription');
+            expect(appointmentDescriptionTextField.length).toEqual(1);
+            expect(appointmentDescriptionTextField.prop('label')).toEqual('Description');
+            expect(appointmentDescriptionTextField.prop('multiline')).toEqual(true);
+            expect(appointmentDescriptionTextField.prop('rowsMax')).toEqual('4');
+            expect(appointmentDescriptionTextField.prop('value')).toEqual('someDescription');
         });
 
         it('dialog actions', () => {
-            expect(wrapper.find(DialogActions).length).toBe(1);
+            expect(wrapper.find(DialogActions).length).toEqual(1);
         });
 
         it('two buttons', () => {
-            expect(wrapper.find(Button).length).toBe(2);
+            expect(wrapper.find(Button).length).toEqual(2);
         });
 
         it('save button', () => {
             let saveButton = wrapper.find(Button).at(0);
-            expect(saveButton.prop('onClick')).toBe(mockHandleSave);
-            expect(saveButton.prop('color')).toBe("primary");
-            expect(saveButton.render().text()).toBe("Save");
+            expect(saveButton.prop('onClick')).toEqual(mockHandleSave);
+            expect(saveButton.prop('color')).toEqual("primary");
+            expect(saveButton.render().text()).toEqual("Save");
         });
 
         it('cancel button', () => {
             let cancelButton = wrapper.find(Button).at(1);
-            expect(cancelButton.prop('onClick')).toBe(mockHandleCancel);
-            expect(cancelButton.prop('color')).toBe("primary");
-            expect(cancelButton.render().text()).toBe("Cancel");
+            expect(cancelButton.prop('onClick')).toEqual(mockHandleCancel);
+            expect(cancelButton.prop('color')).toEqual("primary");
+            expect(cancelButton.render().text()).toEqual("Cancel");
         });
     });
 
@@ -155,19 +158,19 @@ describe('AppointmentDialog', () => {
         it('renders delete button', () => {
             let deleteButton = wrapper.find("#delete").at(0);
 
-            expect(deleteButton.length).toBe(1);
-            expect(deleteButton.prop('onClick')).toBe(mockHandleDelete);
-            expect(deleteButton.prop('color')).toBe("primary");
-            expect(deleteButton.render().text()).toBe("Delete");
+            expect(deleteButton.length).toEqual(1);
+            expect(deleteButton.prop('onClick')).toEqual(mockHandleDelete);
+            expect(deleteButton.prop('color')).toEqual("primary");
+            expect(deleteButton.render().text()).toEqual("Delete");
         });
 
         it('renders edit dialog title', () => {
-            expect(wrapper.find(DialogTitle).render().text()).toBe("Edit Appointment");
+            expect(wrapper.find(DialogTitle).render().text()).toEqual("Edit Appointment");
         });
 
         it('disables date text field', () => {
             let appointmentDateTextField = wrapper.find('#date');
-            expect(appointmentDateTextField.at(0).prop('disabled')).toBe(true);
+            expect(appointmentDateTextField.at(0).prop('disabled')).toEqual(true);
         });
     });
 });

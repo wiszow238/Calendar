@@ -9,6 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import WarningDialog from "../dialog/WarningDialog";
 import AppointmentDialog from "../dialog/AppointmentDialog";
 import {withStyles} from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 
 const styles = {
     cell: {
@@ -22,20 +23,31 @@ const styles = {
         height: "20px",
         textAlign: "center",
         verticalAlign: "middle"
+    },
+    nextMonthCell: {
+        textAlign: "right"
+    },
+    changeMonthButton: {
+        color: "#000000",
+        opacity: "0.54"
     }
 };
 
 export class Home extends Component {
-    state = {
-        warningDialogOpen: false,
-        appointmentDialogOpen: false,
-        appointments: new Map(),
-        appointmentAction: "",
-        appointmentDate: "",
-        appointmentTime: "",
-        appointmentDescription: "",
-        errorMessage: ""
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            warningDialogOpen: false,
+            appointmentDialogOpen: false,
+            appointments: new Map(),
+            appointmentAction: "",
+            appointmentDate: "",
+            appointmentTime: "",
+            appointmentDescription: "",
+            errorMessage: "",
+            displayMonth: new Date()
+        };
+    }
 
     handleClickOpen = (date) => {
         date = (new Date(date)).toISOString().split('T')[0];
@@ -82,8 +94,7 @@ export class Home extends Component {
             newAppointmentTime = this.state.appointmentTime + ":00";
         }
         let newAppointmentDate = this.state.appointmentDate + "T" + newAppointmentTime;
-        let currentDate = new Date();
-        if (currentDate > new Date(newAppointmentDate)) {
+        if (this.state.displayMonth > new Date(newAppointmentDate)) {
             this.setState({errorMessage: "You can not create a new \n appointment that is in the past."});
             return;
         }
@@ -132,14 +143,27 @@ export class Home extends Component {
         });
     };
 
+    handleNextMonthClick = () => {
+        let nextMonth = this.state.displayMonth.setMonth(this.state.displayMonth.getMonth() + 1);
+        this.setState({
+            displayMonth: new Date(nextMonth)
+        });
+    };
+
+    handlePrevMonthClick = () => {
+        let prevMonth = this.state.displayMonth.setMonth(this.state.displayMonth.getMonth() - 1);
+        this.setState({
+            displayMonth: new Date(prevMonth)
+        });
+    };
+
     renderMonth = () => {
         const monthLabels = ["January", "February", "March", "April", "May", "June",
             "July", "August", "September", "October", "November", "December"
         ];
-        let date = new Date();
 
         return (<div className="month-header">
-            {monthLabels[date.getMonth()] + " " + date.getFullYear()}
+            {monthLabels[this.state.displayMonth.getMonth()] + " " + this.state.displayMonth.getFullYear()}
         </div>)
     };
 
@@ -155,7 +179,7 @@ export class Home extends Component {
     };
 
     renderDays = () => {
-        let currentDate = new Date();
+        let currentDate = this.state.displayMonth;
         let startOfWeek = this.getStartOfWeek(new Date(currentDate.getFullYear(), currentDate.getMonth(), 1));
 
         let weeks = [];
@@ -180,7 +204,22 @@ export class Home extends Component {
                     <Table className="table">
                         <TableHead>
                             <TableRow>
-                                <TableCell colSpan="7">{this.renderMonth()}</TableCell>
+                                <TableCell>
+                                    <Button mini size="small"
+                                            id="btn1"
+                                            classes={{text: classes.changeMonthButton}}
+                                            onClick={this.handlePrevMonthClick}>
+                                        Previous Month
+                                    </Button>
+                                </TableCell>
+                                <TableCell colSpan="5">{this.renderMonth()}</TableCell>
+                                <TableCell classes={{root: classes.nextMonthCell}}>
+                                    <Button mini size="small"
+                                            classes={{text: classes.changeMonthButton}}
+                                            onClick={this.handleNextMonthClick}>
+                                        Next Month
+                                    </Button>
+                                </TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
